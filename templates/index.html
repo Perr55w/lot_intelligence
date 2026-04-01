@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Lot Intelligence — Cox Automotive</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root {
+  --cox-navy: #0a1628;
+  --cox-blue: #003087;
+  --cox-accent: #e8222e;
+  --cox-light: #f4f6fa;
+  --cox-border: #dde2ed;
+  --cox-text: #1a1f36;
+  --cox-muted: #6b7280;
+  --cox-white: #ffffff;
+  --cox-success: #00875a;
+  --cox-card: #ffffff;
+  --font: 'DM Sans', sans-serif;
+  --mono: 'DM Mono', monospace;
+}
+
+body {
+  font-family: var(--font);
+  background: var(--cox-light);
+  color: var(--cox-text);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* NAV */
+.nav {
+  background: var(--cox-navy);
+  padding: 0 32px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.nav-logo {
+  width: 32px;
+  height: 32px;
+  background: var(--cox-accent);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 14px;
+  color: white;
+  letter-spacing: -0.5px;
+}
+.nav-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: white;
+  letter-spacing: -0.2px;
+}
+.nav-sub {
+  font-size: 12px;
+  color: rgba(255,255,255,0.45);
+  font-weight: 400;
+}
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.nav-badge {
+  font-size: 11px;
+  font-weight: 500;
+  padding: 4px 10px;
+  border-radius: 20px;
+  background: rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.6);
+  border: 1px solid rgba(255,255,255,0.12);
+}
+
+/* HERO */
+.hero {
+  background: var(--cox-navy);
+  padding: 48px 32px 56px;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -60px;
+  right: -60px;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(0,48,135,0.6) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-inner {
+  max-width: 800px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+.hero-eyebrow {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--cox-accent);
+  margin-bottom: 12px;
+}
+.hero-title {
+  font-size: 32px;
+  font-weight: 600;
+  color: white;
+  letter-spacing: -0.8px;
+  line-height: 1.2;
+  margin-bottom: 12px;
+}
+.hero-desc {
+  font-size: 15px;
+  color: rgba(255,255,255,0.55);
+  font-weight: 400;
+  line-height: 1.6;
+  margin-bottom: 32px;
+  max-width: 560px;
+}
+
+/* SEARCH */
+.search-wrap {
+  display: flex;
+  gap: 10px;
+  align-items: stretch;
+}
+.search-box {
+  flex: 1;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 10px;
+  padding: 14px 18px;
+  font-size: 15px;
+  font-family: var(--font);
+  color: white;
+  outline: none;
+  transition: all 0.2s;
+}
+.search-box::placeholder { color: rgba(255,255,255,0.3); }
+.search-box:focus {
+  border-color: rgba(255,255,255,0.4);
+  background: rgba(255,255,255,0.09);
+}
+.search-btn {
+  background: var(--cox-accent);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 14px 24px;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: var(--font);
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.search-btn:hover { background: #c9111c; }
+.search-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* EXAMPLES */
+.examples {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 16px;
+}
+.example-chip {
+  font-size: 12px;
+  color: rgba(255,255,255,0.5);
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 20px;
+  padding: 5px 12px;
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: var(--font);
+}
+.example-chip:hover {
+  background: rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.8);
+  border-color: rgba(255,255,255,0.2);
+}
+
+/* MAIN */
+.main {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 32px 32px 64px;
+  width: 100%;
+  flex: 1;
+}
+
+/* STATS ROW */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 28px;
+}
+.stat-card {
+  background: var(--cox-card);
+  border: 1px solid var(--cox-border);
+  border-radius: 10px;
+  padding: 16px 18px;
+}
+.stat-label {
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--cox-muted);
+  margin-bottom: 6px;
+}
+.stat-value {
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--cox-text);
+  letter-spacing: -0.5px;
+}
+.stat-sub {
+  font-size: 11px;
+  color: var(--cox-muted);
+  margin-top: 2px;
+}
+
+/* RESULT */
+.result-card {
+  background: var(--cox-card);
+  border: 1px solid var(--cox-border);
+  border-radius: 12px;
+  overflow: hidden;
+  display: none;
+  animation: slideUp 0.25s ease;
+}
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.result-card.visible { display: block; }
+
+.result-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--cox-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #fafbfd;
+}
+.result-header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.result-status {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--cox-success);
+}
+.result-status.error { background: var(--cox-accent); }
+.result-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--cox-text);
+}
+.result-count {
+  font-size: 12px;
+  color: var(--cox-muted);
+}
+
+.sql-block {
+  padding: 14px 20px;
+  background: var(--cox-navy);
+  border-bottom: 1px solid var(--cox-border);
+  font-family: var(--mono);
+  font-size: 12px;
+  color: rgba(255,255,255,0.75);
+  line-height: 1.6;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+.sql-keyword { color: #7dd3fc; }
+
+.table-wrap {
+  overflow-x: auto;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+thead tr {
+  background: #f8f9fc;
+  border-bottom: 2px solid var(--cox-border);
+}
+th {
+  padding: 10px 16px;
+  text-align: left;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--cox-muted);
+  white-space: nowrap;
+}
+td {
+  padding: 11px 16px;
+  border-bottom: 1px solid #f0f2f7;
+  color: var(--cox-text);
+}
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: #fafbfd; }
+
+.error-msg {
+  padding: 20px;
+  color: var(--cox-accent);
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* LOADING */
+.loading {
+  display: none;
+  padding: 32px;
+  text-align: center;
+}
+.loading.visible { display: block; }
+.spinner {
+  width: 24px;
+  height: 24px;
+  border: 2px solid var(--cox-border);
+  border-top-color: var(--cox-blue);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  margin: 0 auto 12px;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.loading-text {
+  font-size: 13px;
+  color: var(--cox-muted);
+}
+
+/* EMPTY STATE */
+.empty-state {
+  text-align: center;
+  padding: 64px 32px;
+  color: var(--cox-muted);
+}
+.empty-icon {
+  font-size: 36px;
+  margin-bottom: 12px;
+  opacity: 0.4;
+}
+.empty-title {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--cox-text);
+  margin-bottom: 6px;
+}
+.empty-sub { font-size: 13px; }
+
+/* FOOTER */
+.footer {
+  background: var(--cox-navy);
+  padding: 20px 32px;
+  text-align: center;
+  font-size: 12px;
+  color: rgba(255,255,255,0.3);
+}
+
+@media (max-width: 640px) {
+  .stats-row { grid-template-columns: repeat(2, 1fr); }
+  .hero { padding: 32px 20px 40px; }
+  .main { padding: 20px 16px 40px; }
+  .hero-title { font-size: 24px; }
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-brand">
+    <div class="nav-logo">LI</div>
+    <div>
+      <div class="nav-title">Lot Intelligence</div>
+      <div class="nav-sub">Wholesale Analytics Platform</div>
+    </div>
+  </div>
+  <div class="nav-right">
+    <span class="nav-badge">Manheim Data</span>
+    <span class="nav-badge">AI-Powered</span>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Cox Automotive · Internal Analytics</div>
+    <h1 class="hero-title">Ask anything about your auction data</h1>
+    <p class="hero-desc">Type a plain English question and get instant SQL-powered insights from the Manheim wholesale database. No query writing required.</p>
+    <div class="search-wrap">
+      <input class="search-box" id="questionInput" type="text" placeholder="e.g. Which make had the highest average sale price?" autocomplete="off"/>
+      <button class="search-btn" id="searchBtn" onclick="runQuery()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        Analyze
+      </button>
+    </div>
+    <div class="examples">
+      <span class="example-chip" onclick="fillExample(this)">Which make had the highest average sale price?</span>
+      <span class="example-chip" onclick="fillExample(this)">How many vehicles sold vs not sold?</span>
+      <span class="example-chip" onclick="fillExample(this)">Which auction location had the most sales?</span>
+      <span class="example-chip" onclick="fillExample(this)">What is the average mileage by fuel type?</span>
+      <span class="example-chip" onclick="fillExample(this)">Which segment had the highest year over year change?</span>
+      <span class="example-chip" onclick="fillExample(this)">Top 5 dealers by total purchases?</span>
+    </div>
+  </div>
+</div>
+
+<main class="main">
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-label">Total Vehicles</div>
+      <div class="stat-value">200</div>
+      <div class="stat-sub">In database</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Auction Locations</div>
+      <div class="stat-value">6</div>
+      <div class="stat-sub">Physical &amp; digital</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Active Dealers</div>
+      <div class="stat-value">25</div>
+      <div class="stat-sub">Buyers &amp; sellers</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Index Segments</div>
+      <div class="stat-value">10</div>
+      <div class="stat-sub">Market categories</div>
+    </div>
+  </div>
+
+  <div class="loading" id="loading">
+    <div class="spinner"></div>
+    <div class="loading-text">Generating SQL and running query...</div>
+  </div>
+
+  <div class="result-card" id="resultCard">
+    <div class="result-header">
+      <div class="result-header-left">
+        <div class="result-status" id="resultStatus"></div>
+        <div class="result-label" id="resultLabel">Results</div>
+      </div>
+      <div class="result-count" id="resultCount"></div>
+    </div>
+    <div class="sql-block" id="sqlBlock"></div>
+    <div id="resultBody"></div>
+  </div>
+
+  <div class="empty-state" id="emptyState">
+    <div class="empty-icon">⬆</div>
+    <div class="empty-title">Ready to analyze</div>
+    <div class="empty-sub">Ask a question above or click one of the example prompts to get started</div>
+  </div>
+</main>
+
+<footer class="footer">
+  Lot Intelligence · Built on Cox Automotive / Manheim wholesale data · Powered by Claude AI
+</footer>
+
+<script>
+const input = document.getElementById('questionInput');
+const btn = document.getElementById('searchBtn');
+const loading = document.getElementById('loading');
+const resultCard = document.getElementById('resultCard');
+const emptyState = document.getElementById('emptyState');
+const sqlBlock = document.getElementById('sqlBlock');
+const resultBody = document.getElementById('resultBody');
+const resultLabel = document.getElementById('resultLabel');
+const resultCount = document.getElementById('resultCount');
+const resultStatus = document.getElementById('resultStatus');
+
+input.addEventListener('keydown', e => { if (e.key === 'Enter') runQuery(); });
+
+function fillExample(el) {
+  input.value = el.textContent;
+  input.focus();
+}
+
+function highlightSQL(sql) {
+  const keywords = ['SELECT','FROM','WHERE','JOIN','ON','GROUP BY','ORDER BY','HAVING',
+    'LIMIT','AND','OR','AS','COUNT','AVG','SUM','MAX','MIN','DISTINCT','LEFT','INNER',
+    'OUTER','DESC','ASC','BY','IN','NOT','NULL','ROUND','UNION','ALL'];
+  let result = sql;
+  keywords.forEach(k => {
+    const re = new RegExp(`\\b${k}\\b`, 'gi');
+    result = result.replace(re, `<span class="sql-keyword">${k}</span>`);
+  });
+  return result;
+}
+
+async function runQuery() {
+  const question = input.value.trim();
+  if (!question) return;
+
+  btn.disabled = true;
+  loading.classList.add('visible');
+  resultCard.classList.remove('visible');
+  emptyState.style.display = 'none';
+
+  try {
+    const res = await fetch('/query', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ question })
+    });
+    const data = await res.json();
+
+    loading.classList.remove('visible');
+    resultCard.classList.add('visible');
+
+    if (data.error) {
+      resultStatus.className = 'result-status error';
+      resultLabel.textContent = 'Error';
+      resultCount.textContent = '';
+      sqlBlock.innerHTML = data.sql ? highlightSQL(data.sql) : '';
+      sqlBlock.style.display = data.sql ? 'block' : 'none';
+      resultBody.innerHTML = `<div class="error-msg">⚠ ${data.error}</div>`;
+      return;
+    }
+
+    resultStatus.className = 'result-status';
+    resultLabel.textContent = 'Query Results';
+    resultCount.textContent = `${data.count} row${data.count !== 1 ? 's' : ''} returned`;
+    sqlBlock.style.display = 'block';
+    sqlBlock.innerHTML = highlightSQL(data.sql);
+
+    if (data.rows.length === 0) {
+      resultBody.innerHTML = `<div class="error-msg" style="color:var(--cox-muted)">No results found for this query.</div>`;
+      return;
+    }
+
+    let html = '<div class="table-wrap"><table><thead><tr>';
+    data.columns.forEach(col => {
+      html += `<th>${col.replace(/_/g,' ')}</th>`;
+    });
+    html += '</tr></thead><tbody>';
+    data.rows.forEach(row => {
+      html += '<tr>';
+      row.forEach(val => {
+        const display = val === null ? '<span style="color:#ccc">—</span>' :
+          (typeof val === 'number' && val > 999 ? val.toLocaleString() : val);
+        html += `<td>${display}</td>`;
+      });
+      html += '</tr>';
+    });
+    html += '</tbody></table></div>';
+    resultBody.innerHTML = html;
+
+  } catch (err) {
+    loading.classList.remove('visible');
+    resultCard.classList.add('visible');
+    resultStatus.className = 'result-status error';
+    resultLabel.textContent = 'Connection Error';
+    resultCount.textContent = '';
+    sqlBlock.style.display = 'none';
+    resultBody.innerHTML = `<div class="error-msg">⚠ Could not connect to the server. Make sure the app is running.</div>`;
+  } finally {
+    btn.disabled = false;
+  }
+}
+</script>
+</body>
+</html>
